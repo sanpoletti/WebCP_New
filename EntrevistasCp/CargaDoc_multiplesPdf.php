@@ -66,6 +66,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $destino = "{$carpetaDestino}{$numeroConsulta}-{$sec}-{$safe}";
 
         if (@move_uploaded_file($tmp, $destino)) {
+            @chmod($destino, 0644); // Lectura global
+            // --- Forzar permisos de lectura para IIS al nuevo archivo ---
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                try {
+                    // Da permisos de lectura/escritura a IUSR, IIS_IUSRS y al AppPool actual
+                    $cmds = [
+                        'icacls "' . $destino . '" /grant IUSR:(R)',
+                        'icacls "' . $destino . '" /grant "IIS_IUSRS":(R)',
+                        'icacls "' . $destino . '" /grant "IIS AppPool\\DGPOLA":(R)',
+                    ];
+                    foreach ($cmds as $c) {
+                        @exec($c);
+                    }
+                } catch (Exception $e) {
+                    error_log("Error ajustando permisos NTFS: " . $e->getMessage());
+                }
+            }
+            
+            
             // Registrar en la base si existe la clase
             if (file_exists(__DIR__ . '/entrevistas.class.php')) {
                 include_once __DIR__ . '/entrevistas.class.php';

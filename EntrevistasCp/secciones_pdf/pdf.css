@@ -1,0 +1,16 @@
+* {
+	font-size: 12px;
+	font-family: "arial";
+
+}
+h1, h2, h3, h4, h5 {margin: 15px 5px 2px 5px}
+
+/* salto de pagina*/
+.break { page-break-before: always; }
+
+.resolucion {font-size: 15px; font-weight: bold}
+
+
+.nover{ 
+	visibility:hidden 
+}

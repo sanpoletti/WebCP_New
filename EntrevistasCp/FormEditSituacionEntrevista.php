@@ -16,6 +16,10 @@ if (
     die();
 }
 
+
+
+
+
 // Variables
 $numeroconsulta  = $_GET['numeroconsulta'];
 $nroDoc           = $_GET['nroDoc']?? '';

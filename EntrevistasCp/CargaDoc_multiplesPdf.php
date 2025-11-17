@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -44,14 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $finfo = new finfo(FILEINFO_MIME_TYPE);
 
-    // Verificar si la carpeta existe o se puede crear
     if (!is_dir($carpetaDestino)) {
         if (!@mkdir($carpetaDestino, 0777, true)) {
             die("❌ No se pudo crear la carpeta destino: $carpetaDestino");
         }
     }
 
-    // Forzar permisos 777 para asegurar escritura
     @chmod($carpetaDestino, 0777);
 
     foreach ($_FILES['archivo']['name'] as $i => $origName) {
@@ -66,26 +65,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $destino = "{$carpetaDestino}{$numeroConsulta}-{$sec}-{$safe}";
 
         if (@move_uploaded_file($tmp, $destino)) {
-            @chmod($destino, 0644); // Lectura global
-            // --- Forzar permisos de lectura para IIS al nuevo archivo ---
+            @chmod($destino, 0644);
+
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                 try {
-                    // Da permisos de lectura/escritura a IUSR, IIS_IUSRS y al AppPool actual
                     $cmds = [
                         'icacls "' . $destino . '" /grant IUSR:(R)',
                         'icacls "' . $destino . '" /grant "IIS_IUSRS":(R)',
                         'icacls "' . $destino . '" /grant "IIS AppPool\\DGPOLA":(R)',
                     ];
-                    foreach ($cmds as $c) {
-                        @exec($c);
-                    }
+                    foreach ($cmds as $c) { @exec($c); }
                 } catch (Exception $e) {
                     error_log("Error ajustando permisos NTFS: " . $e->getMessage());
                 }
             }
-            
-            
-            // Registrar en la base si existe la clase
+
             if (file_exists(__DIR__ . '/entrevistas.class.php')) {
                 include_once __DIR__ . '/entrevistas.class.php';
                 if (class_exists('AbmDocumentacionEntrevista')) {
@@ -106,13 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head><meta charset="utf-8"><title>Subida exitosa</title>
 <style>
     body { font-family: Arial, sans-serif; text-align:center; padding-top:60px; background:#f8f9fb; color:#333; }
-    .msg { background:#d1e7dd; color:#0f5132; border:1px solid #badbcc; border-radius:8px; display:inline-block; padding:15px 25px; box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+    .msg { background:#d1e7dd; color:#0f5132; border:1px solid #badbcc; border-radius:8px; display:inline-block; padding:15px 25px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
 </style></head>
 <body>
 <div class="msg">✅ Archivo subido correctamente. Cerrando ventana...</div>
 <script>
 setTimeout(function(){
-    if (window.opener && !window.opener.closed) window.opener.location.reload();
+
+    if (window.parent) {
+        window.parent.postMessage("cerrarModal", "*");
+    }
+
+    if (window.opener && !window.opener.closed) {
+        window.opener.location.reload();
+    }
+
     window.close();
 }, 1200);
 </script>
@@ -152,9 +154,7 @@ setTimeout(function(){
             cursor: pointer;
             color: #888;
         }
-        .close-btn:hover {
-            color: #000;
-        }
+        .close-btn:hover { color: #000; }
         h3 {
             margin-top: 0;
             color: #333;
@@ -162,7 +162,7 @@ setTimeout(function(){
             padding-bottom: 10px;
         }
         h4 { color: #555; margin-bottom: 20px; }
-        input[type="file"] { display: block; margin-bottom: 20px; width: 100%; }
+        input[type="file"] { margin-bottom: 20px; width: 100%; }
         input[type="submit"], button {
             background-color: #0078D7;
             color: #fff;
@@ -173,7 +173,7 @@ setTimeout(function(){
             font-weight: 500;
             margin-right: 10px;
         }
-        input[type="submit"]:hover, button:hover { background-color: #005fa3; }
+        input[type="submit"]:hover { background-color: #005fa3; }
         button { background-color: #6c757d; }
         button:hover { background-color: #5a6268; }
         small { display: block; margin-top: 10px; color: #777; }
@@ -204,12 +204,10 @@ setTimeout(function(){
 <script>
 let formSubmitted = false;
 
-// Botón "Cancelar"
 document.getElementById('cancelarBtn').addEventListener('click', function() {
     cerrarVentana();
 });
 
-// Cerrar ventana (botón o "X")
 function cerrarVentana() {
     if (window.parent) {
         window.parent.postMessage('cerrarModal', '*');
@@ -219,10 +217,8 @@ function cerrarVentana() {
     window.close();
 }
 
-// Desactivar advertencia del navegador
 window.onbeforeunload = null;
 
-// Mostrar "Subiendo..." al enviar
 $('#abmFormUsuario').on('submit', function() {
     formSubmitted = true;
     $('#submitButton')

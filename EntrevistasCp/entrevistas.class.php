@@ -239,7 +239,7 @@ class Entrevistas extends SHDO{
 
     
     public function __construct($ntitular, $idhogar, $nrorub, $numeroConsulta, $idpersonahogar) {
-        
+
         /*
         echo "<pre>🛠️ DEBUG ENTREVISTAS\n";
         echo "ntitular: $ntitular\n";
@@ -357,8 +357,14 @@ class Entrevistas extends SHDO{
         $result .= '</ul><hr/>';
         return $result;
     }
-    private function cargarHogarCP($ntitular, $nrorub, $idhogar, $numeroConsulta) {
-        $this->hogarCP = new HogarCP($ntitular, $nrorub, $idhogar, $numeroConsulta);
+    private function cargarHogarCP($ntitular, $nrorub, $idhogar, $numeroConsulta,$idpersonahogar = null) {
+       // $this->hogarCP = new HogarCP($ntitular, $nrorub, $idhogar, $numeroConsulta);
+        $this->hogarCP = new HogarCP(
+            $ntitular,
+            $idhogar,          // acá va el idhogar real
+            $numeroConsulta,
+            $idpersonahogar ?? null
+            );
     }
     
 }

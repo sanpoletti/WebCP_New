@@ -1,6 +1,4 @@
 <?php
-
-
 //if (count($sh->getHogarCP()->getData())>0) 
 if (count($sh->getHogarCP()->getData())>0) 
    /* echo '<pre>';

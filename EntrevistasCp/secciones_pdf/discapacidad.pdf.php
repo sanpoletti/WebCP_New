@@ -37,6 +37,6 @@ if (count($discapacidad->getData())>0)
 
 <?php
 }else {
-    echo "Sin Datos";
+    echo "";
 }
 ?>

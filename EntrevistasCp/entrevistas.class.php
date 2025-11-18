@@ -431,9 +431,19 @@ class HogarCP extends SHDO {
         $this->titular = $this->buscarTitular();
     }
     
+    public function getEstadoCertificadoActual() {
+        if (!isset($this->estadoCertificado)) {
+            $this->estadoCertificado = new EstadoCertificadoActual($this->getIdHogar());
+        }
+        return $this->estadoCertificado;
+    }
     
-    
-    
+    public function getDiscapacidad() {
+        if (!isset($this->dicapacidad)) {
+            $this->dicapacidad = new discapacidad($this->getIdHogar());
+        }
+        return $this->dicapacidad;
+    }
     public function buscarTitular() {
         return $this->titular;
     }
@@ -868,6 +878,14 @@ class ObservacionesRub extends SHDO {
     }
 }
 
+
+class discapacidad extends SHDO {
+    public function __construct($idhogar, $arrAliasNames=null) {
+        parent::__construct("_discapacidad $idhogar");
+        $this->autoPopulate($arrAliasNames);
+    }
+    
+}
 /**
  * Clase que modela el observaciones del hogar cp
  */
@@ -1145,6 +1163,14 @@ class detalleIngresos extends SHDO {
         parent::__construct("_buscar_HOGAR_RUB_fichaN $nroRub");
         $this->autoPopulate($arrAliasNames);
     }
+}
+
+class EstadoCertificadoActual extends SHDO {
+    public function __construct($idhogar, $arrAliasNames=null) {
+        parent::__construct("EstadoCertificadoActual $idhogar");
+        $this->autoPopulate($arrAliasNames);
+    }
+    
 }
 
 class HogarRub extends SHDO {

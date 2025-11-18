@@ -26,8 +26,8 @@ if ( ! $clasiRub->isEmpty() || ! $domiRub->isEmpty() )
 	<td style="width: 20%; text-align: left; vertical-align: bottom;"><u>Calificacion:</u><i><?php echo $clasiRub->getUniqueData()->getProperty('clasirub'); ?></i></td>
 	<td style="width: 20%; text-align: left; vertical-align: bottom;"><u>Nro de Rub:</u><i><?php echo $hogarRub->getNRub(); ?></i></td>
 	<td style="width: 20%; text-align: left; vertical-align: bottom;"><u>Codigo:</u><i><?php echo $clasiRub->getUniqueData()->getProperty('codigo'); ?></i></td>
-	<td style="width: 15%; text-align: left; vertical-align: bottom;"><u>Año Rub:</u><i><?php $anioRub; ?></i></td>
-	<td style="width: 15%; text-align: right; vertical-align: bottom;"><u>Relev:</u><i><?php $relRub ; ?></i></td>
+	<td style="width: 15%; text-align: left; vertical-align: bottom;"><u>Año Rub:</u><i><?php echo $anioRub; ?></i></td>
+	<td style="width: 15%; text-align: right; vertical-align: bottom;"><u>Relev:</u><i><?php  echo $relRub ; ?></i></td>
 	</tr>
 </table>
 

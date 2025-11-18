@@ -82,22 +82,28 @@ include_once 'entrevistas.class.php';
 	
 		include_once 'secciones_pdf/common_func.pdf.php';
 		include 'secciones_pdf/header.pdf.php';
-		//include 'secciones_pdf/desplegable.php';
-		include 'secciones_pdf/resolucion.pdf.php';
-		include 'secciones_pdf/Resol_rub.pdf.php';
+		include 'secciones_pdf/resolucion.pdf.php';	
+		include 'secciones_pdf/retiro_tarjeta.pdf.php';
+		include 'secciones_pdf/amparo.pdf.php';	
+		include 'secciones_pdf/Resol_rub.pdf.php';	
 		include 'secciones_pdf/cp_integrantes.pdf.php';
-		
-		
-		include 'secciones_pdf/domicilios.pdf.php';
-		
-		//include 'secciones_pdf/ingresos.pdf.php';
-		include 'secciones_pdf/observ_hogar.pdf.php';
-		include 'secciones_pdf/turnos.pdf.php';
-		include 'secciones_pdf/observa_seguimiento.pdf.php';
-		include 'secciones_pdf/observa_seguimientoInt.pdf.php';
 		include 'secciones_pdf/eet_inscriptos.pdf.php';
+		include 'secciones_pdf/PlanCuidarEmbarazo_inscriptos.pdf.php';
+		
 		include 'secciones_pdf/pagosCP.pdf.php';
 		include 'secciones_pdf/adeuda_doc.pdf.php';
+		include 'secciones_pdf/estadoCertificadoActual.pdf.php';
+		
+		
+		include 'secciones_pdf/observ_hogar.pdf.php';
+		include 'secciones_pdf/observa_seguimiento.pdf.php';
+		include 'secciones_pdf/observa_seguimientoInt.pdf.php';
+		
+
+
+		include 'secciones_pdf/turnos.pdf.php';
+		include 'secciones_pdf/discapacidad.pdf.php';
+		include 'secciones_pdf/domicilios.pdf.php';	
 		if (  $user->tienePermiso('entrevistas')  || $user->tienePermiso('revision')) {
 		 include 'secciones_pdf/SituacionEntrevista.pdf.php';
 		}

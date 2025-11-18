@@ -101,10 +101,13 @@ function FPDF($orientation='P', $unit='mm', $format='A4')
 	$this->ColorFlag=false;
 	$this->ws=0;
 	//Standard fonts
-	$this->CoreFonts=array('courier'=>'Courier', 'courierB'=>'Courier-Bold', 'courierI'=>'Courier-Oblique', 'courierBI'=>'Courier-BoldOblique',
-		'helvetica'=>'Helvetica', 'helveticaB'=>'Helvetica-Bold', 'helveticaI'=>'Helvetica-Oblique', 'helveticaBI'=>'Helvetica-BoldOblique',
-		'times'=>'Times-Roman', 'timesB'=>'Times-Bold', 'timesI'=>'Times-Italic', 'timesBI'=>'Times-BoldItalic',
-		'symbol'=>'Symbol', 'zapfdingbats'=>'ZapfDingbats');
+$this->CoreFonts=array(
+    'courier'=>'Courier', 'courierB'=>'Courier-Bold', 'courierI'=>'Courier-Oblique', 'courierBI'=>'Courier-BoldOblique',
+    'helvetica'=>'Arial', 'helveticaB'=>'Arial-Bold', 'helveticaI'=>'Arial-Italic', 'helveticaBI'=>'Arial-BoldItalic',
+    'times'=>'Times-Roman', 'timesB'=>'Times-Bold', 'timesI'=>'Times-Italic', 'timesBI'=>'Times-BoldItalic',
+    'symbol'=>'Symbol', 'zapfdingbats'=>'ZapfDingbats'
+);
+
 	//Scale factor
 	if($unit=='pt')
 		$this->k=1;

@@ -36,6 +36,8 @@
 
             <div class="mt-8">
                 <?php
+                
+                /*
                 require_once __DIR__ . '/../login/phpUserClass/access.class.php';
                 $user = new flexibleAccess();
                 
@@ -43,7 +45,19 @@
                     header("Location: /DGPOLA/login/index.php");
                     exit;
                 }
-
+*/
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                require_once __DIR__ . '/../config/path.php';
+                require_once APP_ROOT . '/login/phpUserClass/access.class.php';
+                $user = new flexibleAccess();
+                
+                if (!$user->is_loaded()) {
+                    header("Location: /DGPOLA/login/index.php");
+                    exit;
+                }
+                
                 if (!isset($_GET['seguimiento_hogar'])) {
                     if (isset($_POST['search-text']) && !empty($_POST['search_by'])) {
                         $ntitu = $dni = $nroRub= $apellido = '';

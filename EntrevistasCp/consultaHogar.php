@@ -36,6 +36,22 @@
 
             <div class="mt-8">
                 <?php
+                
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                
+                require_once __DIR__ . '/../login/phpUserClass/access.class.php';
+                $user = new flexibleAccess();
+                
+                if (!$user->is_loaded()) {
+                    header("Location: /DGPOLA/login/index.php");
+                    exit;
+                }
+                
+                
+                
+                
                 require_once $_SERVER["DOCUMENT_ROOT"] . '/DGPOLA/login/phpUserClass/access.class.php';
                 $user = new flexibleAccess();
                 if (!$user->tienePermiso('seguimiento')) {

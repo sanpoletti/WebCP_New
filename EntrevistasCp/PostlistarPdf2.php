@@ -111,59 +111,71 @@
 
   <?php
   session_start();
-  $hora    = $_SESSION['hora'] ?? '';
-  $numeroConsulta = $_SESSION['numeroConsulta'];
-  $ntitu  = $_SESSION['ntitu'];
-  $sec   = $_GET['sec'] ?? '';
+
+  $numeroConsulta = $_SESSION['numeroConsulta'] ?? '';
+  $ntitu  = $_SESSION['ntitu'] ?? '';
   $idhogar= $_SESSION['idhogar'] ?? '';
   $nrorub = $_SESSION['nrorub'] ?? '';
   $uname  = $_SESSION['uname'] ?? '';
-  $tipo   = $_GET['tipo'] ?? '';
 
-  function lista_archivos($carpeta, $numeroConsulta) {
-    //$server  = 'http://' . $_SERVER['HTTP_HOST'] . "/EntrevistasCp/uploads/doc_adjuntada/";
+  // AHORA SÍ: la secuencia del integrante
+  $sec = $_GET['sec'] ?? '';
+  if ($sec === '' && isset($_SESSION['sec'])) {
+      $sec = $_SESSION['sec'];
+  }
+
+  // Prefijo completo esperado en los nombres de archivo
+  // Ejemplo: "358891-0-"
+  $prefijo = $numeroConsulta . "-" . $sec . "-";
+
+  function lista_archivos($carpeta, $prefijo) {
+
     $server  = 'http://' . $_SERVER['HTTP_HOST'] . "/DGPOLA/EntrevistasCp/uploads/doc_adjuntada/";
-    
-    
-    
-    //$carpeta = $_SERVER['DOCUMENT_ROOT'] . "/EntrevistasCp/uploads/doc_adjuntada/";
-    
     $carpeta = $_SERVER['DOCUMENT_ROOT'] . "/DGPOLA/EntrevistasCp/uploads/doc_adjuntada/";
-    
 
     if (is_dir($carpeta)) {
       if ($dir = opendir($carpeta)) {
+
         echo "<table>";
         echo "<tr><th>Documentación</th><th>Fecha</th><th colspan='2'>Acciones</th></tr>";
 
         $encontrado = false;
 
         while (($archivo = readdir($dir)) !== false) {
-          if ($archivo != '.' && $archivo != '..' && $archivo != '.htaccess') {
-            $comparacion = substr($archivo, 0, 6);
-            if ($numeroConsulta == $comparacion) {
-              $encontrado = true;
-              $pdfFechaCreacion = $carpeta . $archivo;
-              $nombre = substr($archivo, 6);
-              $fecha = date("d/m/Y", filemtime($pdfFechaCreacion));
-              $linkVer = $server . $archivo;
 
-              echo "<tr>
-                      <td>$nombre</td>
-                      <td>$fecha</td>
-                      <td class='acciones'><a class='btn-ver' href='$linkVer' target='_blank'>Ver</a></td>
-                      <td class='acciones'><a class='btn-eliminar' href='javascript:Delete(\"$archivo\")'>Eliminar</a></td>
-                    </tr>";
-            }
+          if ($archivo === '.' || $archivo === '..' || $archivo === '.htaccess') {
+            continue;
+          }
+
+          // VERIFICAMOS EL PREFIJO CORRECTO
+          if (strpos($archivo, $prefijo) === 0) {
+
+            $encontrado = true;
+
+            $pdfPath = $carpeta . $archivo;
+            $fecha = date("d/m/Y", filemtime($pdfPath));
+
+            // Nombre visible (quitamos prefijo)
+            $nombreVisible = substr($archivo, strlen($prefijo));
+
+            $linkVer = $server . $archivo;
+
+            echo "<tr>
+                    <td>$nombreVisible</td>
+                    <td>$fecha</td>
+                    <td class='acciones'><a class='btn-ver' href='$linkVer' target='_blank'>Ver</a></td>
+                    <td class='acciones'><a class='btn-eliminar' href='javascript:Delete(\"$archivo\")'>Eliminar</a></td>
+                  </tr>";
           }
         }
 
         if (!$encontrado) {
-          echo "<tr><td colspan='4'><p>No hay documentación adjunta.</p></td></tr>";
+          echo "<tr><td colspan='4'><p>No hay documentación adjunta para este integrante.</p></td></tr>";
         }
 
         echo "</table>";
         closedir($dir);
+
       } else {
         echo "<p>No se pudo abrir la carpeta.</p>";
       }
@@ -172,10 +184,9 @@
     }
   }
 
-  lista_archivos("./uploads/doc_adjuntada/", $numeroConsulta);
+  lista_archivos("./uploads/doc_adjuntada/", $prefijo);
   ?>
 </div>
 
 </body>
 </html>
-

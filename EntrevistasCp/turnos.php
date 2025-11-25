@@ -63,7 +63,7 @@ if (isset($_GET['search_by'])) {
                     $url = 'generar.php?NroDoc=' . $turno->nro_doc .
                     '&ntitu=' . urlencode($turno->ntitular) .
                     '&idhogar=' . $turno->idhogar .
-                    '&nrorub=' . $nrorub .
+                    '&nrorub=' . $turno->nrorub .
                     '&hora=' . urlencode($turno->fecha . ' ' .$turno->hora) .
                     '&numeroConsulta=' . $turno->numeroconsulta.
                     '&idpersonahogar=' . $turno->idpersonahogar .
@@ -151,6 +151,7 @@ if (isset($_GET['search_by'])) {
                 foreach ($turnos->getResult() as $rdoTurno) {
                     $ntitu = $rdoTurno['ntitular'];
                     $nrub = $rdoTurno['nrorub'];
+                    $nrorub = $rdoTurno['nrorub'];
                     $numeroConsulta = $rdoTurno['numeroconsulta'];
                     $idhogar = $rdoTurno['idhogar'];
                     $idpersonahogar = $rdoTurno['idpersonahogar'];
@@ -158,7 +159,7 @@ if (isset($_GET['search_by'])) {
                     
                     $url = 'generar.php?NroDoc=' . $rdoTurno['nro_doc'] .
                     "&ntitu=" . urlencode($ntitu) .
-                    "&nrorub=$nrub&numeroConsulta=$numeroConsulta&evaluada=$reg_evaluada&idpersonahogar=$idpersonahogar&idhogar=$idhogar&hora=" .
+                    "&nrorub=$nrorub&numeroConsulta=$numeroConsulta&evaluada=$reg_evaluada&idpersonahogar=$idpersonahogar&idhogar=$idhogar&hora=" .
                     urlencode($rdoTurno['fecha'] . ' ' . $rdoTurno['hora']);
                     
                     echo "<tr onmouseover='ChangeColor(this, true);' onmouseout='ChangeColor(this, false);' onclick=\"DoNav('$url')\">";

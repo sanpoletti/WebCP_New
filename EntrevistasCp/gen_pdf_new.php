@@ -9,7 +9,8 @@ require_once __DIR__ . '/../login/phpUserClass/access.class.php';
 $user = new flexibleAccess();
 if (  !$user->tienePermiso('seguimiento') ) {
 // El usuario no esta registrado o no tiene permisos
-	header('Location: http://'.$_SERVER['HTTP_HOST'].'/login/index.php');
+	//header('Location: http://'.$_SERVER['HTTP_HOST'].'/login/index.php');
+	header('Location: /login/index.php');
 }
 ?>
 <script type="text/javascript">
@@ -90,7 +91,7 @@ include_once 'entrevistas.class.php';
 		include 'secciones_pdf/eet_inscriptos.pdf.php';
 		include 'secciones_pdf/PlanCuidarEmbarazo_inscriptos.pdf.php';
 		
-		include 'secciones_pdf/pagosCP.pdf.php';
+		//include 'secciones_pdf/pagosCP.pdf.php';
 		include 'secciones_pdf/adeuda_doc.pdf.php';
 		include 'secciones_pdf/estadoCertificadoActual.pdf.php';
 		

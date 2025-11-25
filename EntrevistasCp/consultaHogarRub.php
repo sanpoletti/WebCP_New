@@ -36,10 +36,11 @@
 
             <div class="mt-8">
                 <?php
-                require_once $_SERVER["DOCUMENT_ROOT"] . '/DGPOLA/login/phpUserClass/access.class.php';
+                require_once __DIR__ . '/../login/phpUserClass/access.class.php';
                 $user = new flexibleAccess();
-                if (!$user->tienePermiso('seguimiento')) {
-                    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/login/index.php');
+                
+                if (!$user->is_loaded()) {
+                    header("Location: /DGPOLA/login/index.php");
                     exit;
                 }
 

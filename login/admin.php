@@ -2,7 +2,9 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . '/login/phpUserClass/access.class.php';
 $user = new flexibleAccess();
 if (!$user->tienePermiso('admin')) {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/login/index.php');
+   // header('Location: http://' . $_SERVER['HTTP_HOST'] . '/login/index.php');
+    //header('Location: /login/index.php');
+    header('Location: /DGPOLA/login/index.php');
     exit;
 }
 

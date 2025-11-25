@@ -4,6 +4,7 @@
 * Verifico si el usuario tiene permisos
 */
 require_once(__DIR__ . "/../../login/phpUserClass/access.class.php");
+//header('Location: /DGPOLA/login/index.php');
 
 $user = new flexibleAccess();
 //if ( ! $user->tienePermiso('pagos') ) {

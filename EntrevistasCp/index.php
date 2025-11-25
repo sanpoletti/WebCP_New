@@ -1,6 +1,14 @@
 <?php
 ob_start();
+require_once __DIR__ . '/../login/phpUserClass/access.class.php';
+$user = new flexibleAccess();
+
+if (!$user->is_loaded()) {
+    header("Location: /DGPOLA/login/index.php");
+    exit;
+}
 ?>
+
 
  
 <!DOCTYPE html>

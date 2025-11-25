@@ -11,6 +11,8 @@ $user = new flexibleAccess();
 if (isset($_GET['logout']) && $_GET['logout'] == 1) {
     $user->logout();
     header("Location: " . $_SERVER['PHP_SELF']);
+    
+    
     exit;
 }
 

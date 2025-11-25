@@ -115,10 +115,16 @@ class flexibleAccess {
         $this->getUserData = array();
     }
 
-    function is_loaded() {
+   /* function is_loaded() {
         return isset($this->userID);
     }
-
+*/
+    function is_loaded() {
+        return isset($_SESSION[$this->sessionVariable]) && !empty($this->userID);
+    }
+    
+    
+    
     function loadUser($userID) {
         $res = $this->query("SELECT TOP 1 * FROM {$this->dbTable} WHERE {$this->tbFields['userID']} = '".$this->escape($userID)."'", __LINE__);
         if (!sqlsrv_has_rows($res)) return false;

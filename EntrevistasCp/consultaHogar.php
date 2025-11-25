@@ -52,7 +52,8 @@
                 $user = new flexibleAccess();
                 
                 if (!$user->is_loaded()) {
-                    header("Location: /DGPOLA/login/index.php");
+                    //header("Location: /DGPOLA/login/index.php");
+                    header("Location: " . BASE_URL . "/login/index.php");
                     exit;
                 }
                 

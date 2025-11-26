@@ -3,10 +3,9 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once __DIR__ . '/../login/phpUserClass/access.class.php';
-
+require_once __DIR__ . '/../config/path.php';
+require_once APP_ROOT . '/login/phpUserClass/access.class.php';
 header('Content-Type: text/html; charset=UTF-8');
-
 if (
     !isset($_GET['numeroconsulta']) ||
     !isset($_GET['idpersonahogar']) ||
@@ -15,11 +14,6 @@ if (
     echo "No tiene permisos para acceder a Entrevistas.";
     die();
 }
-
-
-
-
-
 // Variables
 $numeroconsulta  = $_GET['numeroconsulta'];
 $nroDoc           = $_GET['nroDoc']?? '';
@@ -39,11 +33,11 @@ $nrorub          = $_GET['nro_rub'] ?? '';
 $idhogar         = $_GET['idhogar'] ?? '';
 $ntitu           = $_GET['ntitu'] ?? '';
 $usuario          =  $_SESSION['username'] ?? '';
+include APP_ROOT . '/EntrevistasCp/entrevistas.class.php';
 
-
-include_once 'entrevistas.class.php';
 $sh = new Entrevistas($ntitu, $idhogar, $nrorub, $numeroconsulta, $idpersonahogar);
-include 'secciones_pdf/common_func.pdf.php';
+include APP_ROOT . '/EntrevistasCp/secciones_pdf/common_func.pdf.php';
+
 $params = [
     'numeroconsulta' => $numeroconsulta,
     'nroDoc' => $nroDoc,

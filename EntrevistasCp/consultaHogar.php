@@ -42,24 +42,14 @@
                 }
                 
 
-                
-
-                
                 require_once __DIR__ . '/../config/path.php';
-
                 require_once APP_ROOT . '/login/phpUserClass/access.class.php';
-                
-                $user = new flexibleAccess();
-                
+                $user = new flexibleAccess();                
                 if (!$user->is_loaded()) {
-                    //header("Location: /DGPOLA/login/index.php");
                     header("Location: " . BASE_URL . "/login/index.php");
                     exit;
                 }
-                
-                
-                
-                require_once $_SERVER["DOCUMENT_ROOT"] . '/DGPOLA/login/phpUserClass/access.class.php';
+                require_once APP_ROOT . '/login/phpUserClass/access.class.php';              
                 $user = new flexibleAccess();
                 if (!$user->tienePermiso('seguimiento')) {
                     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/login/index.php');
@@ -78,7 +68,6 @@
                         } elseif ($_POST['search_by'] == 'nroRub') {
                             $nroRub = $_POST['search-text'];
                         }
-
                         if (!empty($ntitu) || !empty($dni) || !empty($apellido) || !empty($nroRub)) {
                             include "entrevistas.class.php";
                             $personas = new Personas($ntitu, $dni, $apellido,$nroRub);
@@ -86,9 +75,7 @@
                             if (!$personas->isEmpty()) {
                                 echo '<div class="mt-6 space-y-4">';
                                 foreach ($personas->getData() as $rdo) {
-				
-				//$baseUrl = "http://" . $_SERVER['HTTP_HOST'] . "/DGPOLA/EntrevistasCp";
-
+	
                                     $url = "generar.php?NroDoc={$rdo->getProperty('dni')}&ntitu={$rdo->getProperty('nrotitular')}&idpersonahogar={$rdo->getProperty('idpersonahogar')}&idhogar={$rdo->getProperty('idhogar')}&numpersona={$rdo->getProperty('numpersona')}&nrorub={$rdo->getProperty('nrorub')}";
                                     //var_dump($rdo->getProperty('nrorub'));
                                     echo "<a href='$url' target='_blank' class='block p-3 bg-gray-100 rounded hover:bg-blue-50'>";

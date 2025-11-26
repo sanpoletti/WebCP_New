@@ -13,6 +13,18 @@ require_once __DIR__ . '/../config/path.php';
 require_once APP_ROOT . '/login/phpUserClass/access.class.php';
 
 $user = new flexibleAccess();
+
+/*
+echo "<pre>";
+echo "Permiso entrevistas: ";
+var_dump($user->tienePermiso('entrevistas'));
+
+echo "\nPermisos cargados:\n";
+print_r($user->permisos);
+echo "</pre>";
+exit;
+
+*/
 if (!$user->tienePermiso('seguimiento')) {
     header('Location: /login/index.php');
     exit;
@@ -73,6 +85,7 @@ $InicioCarga = date("H-i-s");
 //require_once APP_ROOT . '/login/phpUserClass/access.class.php';
 //include_once 'entrevistas.class.php';
 require_once APP_ROOT . '/EntrevistasCp/entrevistas.class.php';
+
 ?>
 <link type="text/css" href="secciones_pdf/pdf.css" rel="stylesheet">
 

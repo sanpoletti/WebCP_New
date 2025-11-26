@@ -2,7 +2,8 @@
 
 
 
-require_once __DIR__ . '/../login/phpUserClass/access.class.php';
+require_once __DIR__ . '/../config/path.php';
+require_once APP_ROOT . '/login/phpUserClass/access.class.php';
 $user = new flexibleAccess();
 header('Content-Type: text/html; charset=utf-8');
 mb_internal_encoding("UTF-8");
@@ -49,11 +50,11 @@ $ntitu            = $_GET['ntitu'] ?? '';
 $identrevista     = intval($_GET['identrevista'] ?? 0);
 $usuario          =  $_SESSION['username'] ?? '';
 $hora             = $_GET['hora'] ?? $hora;
-
-include_once 'entrevistas.class.php';
+include APP_ROOT . '/EntrevistasCp/entrevistas.class.php';
+//include_once 'entrevistas.class.php';
 $sh = new Entrevistas($ntitu, $idhogar, $nrorub, $numeroconsulta, $idpersonahogar);
-include 'secciones_pdf/common_func.pdf.php';
 
+include APP_ROOT . '/EntrevistasCp/secciones_pdf/common_func.pdf.php';
 $params = [
     'numeroconsulta' => $numeroconsulta,
     'nroDoc' => $nroDoc,

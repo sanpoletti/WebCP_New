@@ -64,8 +64,10 @@ mb_internal_encoding("UTF-8");
 
 
 if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../../config/path.php';
+require_once APP_ROOT . '/login/phpUserClass/access.class.php';
 
-require_once __DIR__ . '/../../login/phpUserClass/access.class.php';
+
 $user = new flexibleAccess();
 
 $hora = $_GET['hora'] ?? '';
